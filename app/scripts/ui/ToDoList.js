@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var ToDoItem = require('./ToDoItem');
 var Search = require("../data/Search");
 var Item = require("../data/Item");
@@ -49,15 +50,17 @@ var ToDoList = React.createClass({
 		.reverse();
 		
 		return items.map(function(item, i){
-			return <ToDoItem item={item} {...this.props}/>;
+			return <ToDoItem item={item} key={item.itemName} {...this.props}/>;
 		}.bind(this));
 	},
 	render: function() {
 		var display = <div className="well well-sm">Nothing to do!</div>
 		if(this.props.items.length > 0) {
 			display = <ul className={"list-group"}>
-						{this.renderItems()}
-						</ul>
+						<ReactCSSTransitionGroup transitionName="item">
+							{this.renderItems()}
+						</ReactCSSTransitionGroup>
+					</ul>
 		}
 		return (
 			<div>

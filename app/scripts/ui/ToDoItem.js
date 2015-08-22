@@ -29,6 +29,7 @@ var ToDoItem = React.createClass({
 		var classes = cx({
 			'list-group-item': true,
 			'clearfix': true,
+			'todo-item': true,
 			'list-group-item-success': item.isDone()
 		});
 		return (
