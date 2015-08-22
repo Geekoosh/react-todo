@@ -42,8 +42,8 @@ var SearchBar = React.createClass({
 				  	<label>To</label>
 				  	<DatePicker date={this.state.endDate} onChange={this.changeEndTime}/>
 				  </div>
-				  <button className="btn btn-default" className="btn btn-primary" onClick={this.props.onSearch.bind(null,this.state)}>Go</button>
-				  <button className="btn btn-default" className="btn btn-link" onClick={this.clear}>Clear</button>
+				  <button className="btn btn-primary" onClick={this.props.onSearch.bind(null,this.state)}>Go</button>
+				  <button className="btn btn-link" onClick={this.clear}>Clear</button>
 				</div>
 			</nav>
 		);
