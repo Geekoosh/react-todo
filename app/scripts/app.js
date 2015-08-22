@@ -4,17 +4,14 @@ var React = window.React = require('react'),
     ToDoList = require("./ui/ToDoList"),
     ToDoForm = require("./ui/ToDoForm"),
     SearchBar = require("./ui/SearchBar"),
+    Search = require("./data/Search"),
     mountNode = document.getElementById("app");
 
 var TodoApp = React.createClass({
   getInitialState: function() {
     return {
       items: [],
-      search: {
-        startDate: null,
-        endDate: null,
-        itemName: null
-      }
+      search: new Search()
     };
   },
   newItem: function(item) {
@@ -25,7 +22,7 @@ var TodoApp = React.createClass({
     var itemIndex = this.state.items.indexOf(item);
     if(itemIndex >= 0) {
       var item = this.state.items[itemIndex];
-      item.state = 'done';
+      item.setDone();
       this.setState({items: this.state.items});
     }
   },

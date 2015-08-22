@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var DatePicker = require("./DatePicker");
+var Search = require("../data/Search");
 var cx = React.addons.classSet;
 
 var SearchBar = React.createClass({
@@ -15,23 +16,24 @@ var SearchBar = React.createClass({
 	},
 	getInitialState: function() {
 		return {
-			startDate: null,
-			endDate: null,
-			itemName: null
+			search: new Search()
 		}
 	},
 	changeStartTime: function(date, oldDate) {
-		this.setState({startDate: date});
+		this.state.search.startDate = date;
+		this.setState(this.state.search);
 	},
 	changeEndTime: function(date, oldDate) {
-		this.setState({endDate: date});
+		this.state.search.endDate = date;
+		this.setState(this.state.search);
 	},
 	changeItemName: function(event) {
-		this.setState({itemName: event.target.value});
+		this.state.search.itemName = event.target.value;
+		this.setState(this.state.search);
 	},
 	clear: function() {
 		var newState = this.getInitialState();
-		this.props.onSearch(newState);
+		this.props.onSearch(newState.search);
 		this.setState(newState);
 	},
 	render: function() {
@@ -40,17 +42,17 @@ var SearchBar = React.createClass({
 				<div className="navbar-form navbar-left" role="search">
 				  <div className="form-group">
 				    <label>Search</label>
-				    <input className="form-control" value={this.state.itemName} onChange={this.changeItemName} placeholder="Item name"/>
+				    <input className="form-control" value={this.state.search.itemName} onChange={this.changeItemName} placeholder="Item name"/>
 				  </div>
 				  <div className="form-group">
 				  	<label>From</label>
-				  	<DatePicker date={this.state.startDate} onChange={this.changeStartTime}/>
+				  	<DatePicker date={this.state.search.startDate} onChange={this.changeStartTime}/>
 				  </div>
 				  <div className="form-group">
 				  	<label>To</label>
-				  	<DatePicker date={this.state.endDate} onChange={this.changeEndTime}/>
+				  	<DatePicker date={this.state.search.endDate} onChange={this.changeEndTime}/>
 				  </div>
-				  <button className="btn btn-primary" onClick={this.props.onSearch.bind(null,this.state)}>Go</button>
+				  <button className="btn btn-primary" onClick={this.props.onSearch.bind(null,this.state.search)}>Go</button>
 				  <button className="btn btn-link" onClick={this.clear}>Clear</button>
 				</div>
 			</nav>

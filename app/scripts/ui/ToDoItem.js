@@ -1,16 +1,12 @@
 'use strict';
 
 var React = require('react/addons');
+var Item = require("../data/Item");
 var cx = React.addons.classSet;
 
 var ToDoItem = React.createClass({
 	propTypes: {
-		item: 
-			React.PropTypes.shape({
-				itemName: React.PropTypes.string,
-				date: React.PropTypes.object,
-				state: React.PropTypes.oneOf(['open', 'done'])
-			}).isRequired,
+		item: React.PropTypes.instanceOf(Item).isRequired,
 		onItemDone: React.PropTypes.func,
 		onItemDelete: React.PropTypes.func
 	},
@@ -24,7 +20,7 @@ var ToDoItem = React.createClass({
 	render: function() {
 		var item = this.props.item;
 		var controls = <div/>;
-		if(item.state == 'open') {
+		if(!item.isDone()) {
 			controls = 	<div className="pull-right btn-toolbar">
 							<button className={"btn btn-primary"} onClick={this.props.onItemDone.bind(null, item)}>Done!</button>
 							<button className={"btn btn-primary"} onClick={this.props.onItemDelete.bind(null, item)}>Delete</button>
@@ -33,7 +29,7 @@ var ToDoItem = React.createClass({
 		var classes = cx({
 			'list-group-item': true,
 			'clearfix': true,
-			'list-group-item-success': item.state == 'done'
+			'list-group-item-success': item.isDone()
 		});
 		return (
 			<li className={classes}>

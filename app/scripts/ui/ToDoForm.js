@@ -2,6 +2,7 @@
 
 var React = require('react/addons');
 var DatePicker = require("./DatePicker");
+var Item = require("../data/Item");
 var cx = React.addons.classSet;
 
 var ToDoForm = React.createClass({
@@ -17,28 +18,28 @@ var ToDoForm = React.createClass({
 		var tomorrow = new Date();
 		//tomorrow.setDate(tomorrow.getDate() + 1); 
 	    return {
-	    	itemName: null,
-	    	date: tomorrow,
-	    	state: 'open'	    		
+	    	item: new Item()
 	    }
 	},
 	handleSubmit: function(e) {
 		e.preventDefault();
-		this.props.newItem(this.state);
+		this.props.newItem(this.state.item);
 		this.setState(this.getInitialState());
 	},
 	changeItemName: function(event) {
-		this.setState({itemName: event.target.value});
+		this.state.item.itemName = event.target.value;
+		this.setState(this.state);
 	},
 	changeTime: function(date, oldDate) {
-		this.setState({date: date});
+		this.state.item.date = date;
+		this.setState(this.state);
   	},
   	hasNameError: function() {
-  		return !this.state.itemName || this.state.itemName.length == 0;
+  		return !this.state.item.itemName || this.state.item.itemName.length == 0;
   	},
   	hasDateError: function() {
   		var now = new Date();
-  		return this.state.date < now;
+  		return this.state.item.date < now;
   	},
   	hasErrors: function() {
   		return this.hasNameError() || this.hasDateError();
