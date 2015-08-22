@@ -5,6 +5,14 @@ var DatePicker = require("./DatePicker");
 var cx = React.addons.classSet;
 
 var SearchBar = React.createClass({
+	propTypes: {
+		onSearch: React.PropTypes.func
+	},
+	getDefaultProps: function() {
+		return {
+			onSearch: $.noop
+		}
+	},
 	getInitialState: function() {
 		return {
 			startDate: null,

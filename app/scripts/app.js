@@ -1,6 +1,5 @@
 
 var React = window.React = require('react'),
-    Timer = require("./ui/Timer"),
     ToDoItem = require("./ui/ToDoItem"),
     ToDoList = require("./ui/ToDoList"),
     ToDoForm = require("./ui/ToDoForm"),

@@ -4,6 +4,23 @@ var React = require('react/addons');
 var cx = React.addons.classSet;
 
 var ToDoItem = React.createClass({
+	propTypes: {
+		item: 
+			React.PropTypes.shape({
+				itemName: React.PropTypes.string,
+				date: React.PropTypes.object,
+				state: React.PropTypes.oneOf(['open', 'done'])
+			}).isRequired,
+		onItemDone: React.PropTypes.func,
+		onItemDelete: React.PropTypes.func
+	},
+	getDefaultProps: function() {
+		return {
+			item: null,
+			onItemDone: $.noop,
+      		onItemDelete: $.noop
+		}
+	},
 	render: function() {
 		var item = this.props.item;
 		var controls = <div/>;

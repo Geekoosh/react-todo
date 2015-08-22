@@ -4,6 +4,34 @@ var React = require('react');
 var ToDoItem = require('./ToDoItem');
 
 var ToDoList = React.createClass({
+	propTypes: {
+		items: React.PropTypes.arrayOf(
+				React.PropTypes.shape({
+					itemName: React.PropTypes.string,
+					date: React.PropTypes.object,
+					state: React.PropTypes.oneOf(['open', 'done'])
+				})
+			).isRequired,
+		search: React.PropTypes.shape({
+			startDate: React.PropTypes.object,
+			endDate: React.PropTypes.object,
+			itemName: React.PropTypes.string
+		}),
+		onItemDone: React.PropTypes.func,
+		onItemDelete: React.PropTypes.func
+	},
+	getDefaultProps: function() {
+		return {
+			items: [],
+			search: {
+				startDate: null,
+				endDate: null,
+				itemName: null
+			},
+			onItemDone: $.noop,
+      		onItemDelete: $.noop
+		}
+	},
 	renderItems: function() {
 		var items = _.filter(this.props.items, function(item){
 			var search = this.props.search;

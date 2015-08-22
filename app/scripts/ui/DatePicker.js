@@ -3,6 +3,9 @@
 var React = require('react');
 
 var DatePicker = React.createClass({
+	propTypes: {
+		date: React.PropTypes.object
+	},
 	getDefaultProps: function() {
 		return {
 			date: new Date()

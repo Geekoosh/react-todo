@@ -5,6 +5,14 @@ var DatePicker = require("./DatePicker");
 var cx = React.addons.classSet;
 
 var ToDoForm = React.createClass({
+	propTypes: {
+		newItem: React.PropTypes.func
+	},
+	getDefaultProps: function() {
+		return {
+			newItem: $.noop
+		}
+	},
 	getInitialState: function() {
 		var tomorrow = new Date();
 		//tomorrow.setDate(tomorrow.getDate() + 1); 
