@@ -13,6 +13,9 @@ var DateService = (function () {
   				return null;
   			}
   			return _updateDate(date);
+  		},
+  		dateMoment: function(moment) {
+  			return moment ? this.date(moment.toDate()) : null;
   		}
   	}
 })();

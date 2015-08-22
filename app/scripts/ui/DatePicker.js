@@ -16,7 +16,7 @@ var DatePicker = React.createClass({
 		this.dt = $(this.refs.datepicker.getDOMNode()).datetimepicker({format:'DD-MMMM-YYYY'});
 		this.dt.data("DateTimePicker").date(this.props.date);
 		this.dt.on('dp.change', function(e){
-			this.props.onChange(DateService.date(e.date.toDate()), DateService.date(e.oldDate.toDate()));
+			this.props.onChange(DateService.dateMoment(e.date), DateService.dateMoment(e.oldDate));
 		}.bind(this));
 	},
 	componentWillReceiveProps: function(nextProps) {
