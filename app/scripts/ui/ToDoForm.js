@@ -3,9 +3,12 @@
 var React = require('react/addons');
 var DatePicker = require("./DatePicker");
 var Item = require("../data/Item");
+var DateService = require("../data/DateService");
+var InputValidatorMixin = require("./InputValidatorMixin");
 var cx = React.addons.classSet;
 
 var ToDoForm = React.createClass({
+	mixins: [InputValidatorMixin],
 	propTypes: {
 		newItem: React.PropTypes.func
 	},
@@ -32,52 +35,36 @@ var ToDoForm = React.createClass({
 		this.state.item.date = date;
 		this.setState(this.state);
   	},
-  	hasNameError: function() {
-  		return !this.state.item.itemName || this.state.item.itemName.length == 0;
+  	nameValidator: function() {
+  		if(!this.state.item.itemName || this.state.item.itemName.length == 0) {
+  			return 'Name must not be empty';
+  		}
+  		return null;
   	},
-  	hasDateError: function() {
-  		var now = new Date();
-  		return this.state.item.date < now;
+  	dateValidator: function() {
+  		if(this.state.item.date < DateService.nowDate()) {
+  			return 'Please select a future deadline';
+  		}
+  		return null;
   	},
-  	hasErrors: function() {
-  		return this.hasNameError() || this.hasDateError();
-  	},
-  	componentDidMount: function() {
-  		$('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
-  	},
-  	componentDidUpdate: function() {
-  		$('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
+  	componentWillMount: function() {
+  		this.addValidators(['name', 'date']);
   	},
 	render: function() {
-		var cxGroupName = cx({
-			'input-group': true,
-			'form-group': true,
-			'has-error' : this.hasNameError()
-		});
-		var nameTitle = this.hasNameError() ? 'Name must not be empty' : '';
-		var cxGroupDate = cx({
-			'form-group': true,
-			'has-error' : this.hasDateError()
-		});
-		var dateTitle = this.hasDateError() ? 'Please select a future deadline' : '';
 		return (
 			<div className="panel panel-primary">
 				<div className="panel-heading">Add ToDo Item</div>
 				<div className="panel-body">
 					<form onSubmit={this.handleSubmit} className="form-inline">
-						<div className={cxGroupDate}
-							data-toggle="tooltip" data-placement="top"
-							title={dateTitle}
-				          	data-original-title={dateTitle}>
+						<div className={this.validClasses('date', {'form-group': true})}
+							{...this.validTooltip('date')}>
 				        	<DatePicker date={this.state.item.date} onChange={this.changeTime}/>
 				        </div>
-						<div className={cxGroupName}>
+						<div className={this.validClasses('name', {'form-group': true, 'input-group': true})}>
 				          <input type="text" className={"form-control"} 
 				          		value={this.state.item.itemName} 
 				          		onChange={this.changeItemName}
-				          		data-toggle="tooltip" data-placement="top"
-				          		title={nameTitle}
-				          		data-original-title={nameTitle}
+				          		{...this.validTooltip('name')}
 				          		placeholder="Item name..."/>
 				        </div>
 			            <button className={"btn btn-primary form-group"} type="submit" disabled={this.hasErrors()}>Add</button>
