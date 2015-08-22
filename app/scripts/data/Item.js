@@ -1,4 +1,5 @@
 'use strict';
+var DateService = require("../data/DateService");
 
 Object.defineProperty(module.exports, "STATE", {
 	value: {
@@ -12,7 +13,7 @@ var STATE = module.exports.STATE;
 var Item = (function () {
   function Item() {
     this.itemName = null;
-    this.date = new Date();
+    this.date = DateService.nowDate();
     this.state = STATE.OPEN;
   }
 

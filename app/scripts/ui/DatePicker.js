@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var DateService = require("../data/DateService");
 
 var DatePicker = React.createClass({
 	propTypes: {
@@ -8,24 +9,20 @@ var DatePicker = React.createClass({
 	},
 	getDefaultProps: function() {
 		return {
-			date: new Date()
+			date: DateService.nowDate()
 		}
 	},
 	componentDidMount: function() {
 		this.dt = $(this.refs.datepicker.getDOMNode()).datetimepicker({format:'DD-MMMM-YYYY'});
 		this.dt.data("DateTimePicker").date(this.props.date);
 		this.dt.on('dp.change', function(e){
-			this.props.onChange(e.date, e.oldDate);
+			this.props.onChange(DateService.date(e.date.toDate()), DateService.date(e.oldDate.toDate()));
 		}.bind(this));
 	},
 	componentWillReceiveProps: function(nextProps) {
-		this.dt.off('dp.change');
-		this.dt.data("DateTimePicker").date(nextProps.date);
-		this.dt.on('dp.change', function(e){
-			this.props.onChange(e.date, e.oldDate);
-		}.bind(this));
+		this.dt.data("DateTimePicker").date(DateService.date(nextProps.date));
 	},
-
+	
 	render: function() {
 		return (
 			<div ref="datepicker" className={'input-group date'}>

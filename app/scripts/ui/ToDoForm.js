@@ -15,8 +15,6 @@ var ToDoForm = React.createClass({
 		}
 	},
 	getInitialState: function() {
-		var tomorrow = new Date();
-		//tomorrow.setDate(tomorrow.getDate() + 1); 
 	    return {
 	    	item: new Item()
 	    }
@@ -71,11 +69,11 @@ var ToDoForm = React.createClass({
 							data-toggle="tooltip" data-placement="top"
 							title={dateTitle}
 				          	data-original-title={dateTitle}>
-				        	<DatePicker date={this.state.date} onChange={this.changeTime}/>
+				        	<DatePicker date={this.state.item.date} onChange={this.changeTime}/>
 				        </div>
 						<div className={cxGroupName}>
 				          <input type="text" className={"form-control"} 
-				          		value={this.state.itemName} 
+				          		value={this.state.item.itemName} 
 				          		onChange={this.changeItemName}
 				          		data-toggle="tooltip" data-placement="top"
 				          		title={nameTitle}
